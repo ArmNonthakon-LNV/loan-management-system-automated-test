@@ -1,0 +1,11 @@
+{
+    "env": {
+      "endPoint": "https://test-apigw.t2pco.com",
+      "env": "test",
+      "endpoints": {
+        "initiation": "https://test-apigw.t2pco.com/test/whitelist/v1/bay-bill-payment/transaction/initiation",
+        "confirmation": "https://test-apigw.t2pco.com/test/whitelist/v1/bay-bill-payment/transaction/confirmation"
+      }
+    }
+  }
+  

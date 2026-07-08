@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-07-03T07:21:01.204Z",
+    "end": "2026-07-03T07:21:01.596Z",
+    "duration": 392,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b53acaf4-4f7d-4fbd-8c90-987ca14be7a3",
+      "title": "",
+      "fullFile": "cypress/e2e/lnv/connectionTest.cy.js",
+      "file": "cypress/e2e/lnv/connectionTest.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "876625f7-78ae-4f83-a6f6-e5e4e2a74837",
+          "title": "LNV Database Connection Tests (PostgreSQL)",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should connect to DB LNV and query successfully",
+              "fullTitle": "LNV Database Connection Tests (PostgreSQL) should connect to DB LNV and query successfully",
+              "timedOut": null,
+              "duration": 312,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const query = `SELECT table_name FROM information_schema.tables WHERE table_schema = 'lmsdb-pg-uat-01-matcha' LIMIT 5`;\ncy.task('queryDbLNV', query).then(rows => {\n  expect(rows).to.be.an('array');\n  cy.log('Tables found:', rows.length);\n  rows.forEach((row, index) => {\n    cy.log(`Table ${index}: ${row.table_name}`);\n  });\n});",
+              "err": {},
+              "uuid": "f65434d6-3286-4d30-a18f-3931d6f7cb0c",
+              "parentUUID": "876625f7-78ae-4f83-a6f6-e5e4e2a74837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should verify LNV environment configuration",
+              "fullTitle": "LNV Database Connection Tests (PostgreSQL) should verify LNV environment configuration",
+              "timedOut": null,
+              "duration": 10,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.log('Environment:', Cypress.env('ENV_CONFIG'));\ncy.log('Endpoint:', Cypress.env('endPoint'));\nexpect(Cypress.env('endPoint')).to.be.a('string');",
+              "err": {},
+              "uuid": "d9ee505c-5d7c-492b-a85b-a626daec9992",
+              "parentUUID": "876625f7-78ae-4f83-a6f6-e5e4e2a74837",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f65434d6-3286-4d30-a18f-3931d6f7cb0c",
+            "d9ee505c-5d7c-492b-a85b-a626daec9992"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 322,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "transaction_owner_id": "user0001",
+  "channel": "WEB,API",
+  "query_param": {
+    "transaction_status": "Pending",
+    "created_at_start": "2026-06-24 00:00:00.000 +0700",
+    "created_at_end": "2026-06-24 23:59:59.000 +0700",
+    "sort_by": "updated_time",
+    "sort_method": "DESC"
+  },
+  "page": 1,
+  "page_limit": -1
+}

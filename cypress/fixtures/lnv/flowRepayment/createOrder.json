@@ -1,0 +1,7 @@
+{
+  "customer_id": "1234567890",
+  "loan_account_id": "1234567890",
+  "payment_method": "ThaiQR",
+  "request_amount": 100.00,
+  "channel": "WEB"
+}

@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-07-03T07:58:18.624Z",
+    "end": "2026-07-03T07:58:19.398Z",
+    "duration": 774,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8cacb7ce-051f-4261-8d0f-a7022cf6a61d",
+      "title": "",
+      "fullFile": "cypress/e2e/lnv/apiRepaymentTransactionList/checkBizLogic.cy.js",
+      "file": "cypress/e2e/lnv/apiRepaymentTransactionList/checkBizLogic.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c613394e-aa8c-42ac-a2e1-304bb080b078",
+          "title": "Check business logic of API repaymentTransactionList",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Display response success when call api with correct data",
+              "fullTitle": "Check business logic of API repaymentTransactionList Display response success when call api with correct data",
+              "timedOut": null,
+              "duration": 464,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/bizLogic/success.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.eq(200);\n    expect(res.body.response_code).to.eq(0);\n    expect(res.body.response_message).to.eq('Success');\n  });\n});",
+              "err": {},
+              "uuid": "7870e161-f346-44ec-a2d1-edef0f3bcbb7",
+              "parentUUID": "c613394e-aa8c-42ac-a2e1-304bb080b078",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response success with pagination when call api with correct data",
+              "fullTitle": "Check business logic of API repaymentTransactionList Display response success with pagination when call api with correct data",
+              "timedOut": null,
+              "duration": 88,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/bizLogic/success.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    expect(res.status).to.eq(200);\n    expect(res.body.response_code).to.eq(0);\n    // Verify pagination structure\n    expect(res.body.pagination).to.have.property('total');\n    expect(res.body.pagination).to.have.property('limit');\n    expect(res.body.pagination).to.have.property('page');\n    expect(res.body.pagination).to.have.property('has_more');\n    expect(res.body.pagination.page).to.eq(reqBody.page);\n    expect(res.body.pagination.limit).to.eq(reqBody.page_limit);\n  });\n});",
+              "err": {},
+              "uuid": "f4e3c0a6-0dfe-4fd2-b17d-5ba735f7a1e4",
+              "parentUUID": "c613394e-aa8c-42ac-a2e1-304bb080b078",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response success with transactions data structure",
+              "fullTitle": "Check business logic of API repaymentTransactionList Display response success with transactions data structure",
+              "timedOut": null,
+              "duration": 93,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/bizLogic/success.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    expect(res.status).to.eq(200);\n    expect(res.body.response_code).to.eq(0);\n    expect(res.body.data).to.have.property('transactions');\n    expect(res.body.data.transactions).to.be.an('array');\n    // If transactions exist, verify structure of first item\n    if (res.body.data.transactions.length > 0) {\n      const txn = res.body.data.transactions[0];\n      expect(txn).to.have.property('transaction_id');\n      expect(txn).to.have.property('customer_id');\n      expect(txn).to.have.property('loan_account_id');\n      expect(txn).to.have.property('order_id');\n      expect(txn).to.have.property('payment_method');\n      expect(txn).to.have.property('request_amount');\n      expect(txn).to.have.property('transaction_status');\n      expect(txn).to.have.property('updated_at');\n      expect(txn).to.have.property('created_at');\n      // Verify filtered by status\n      expect(txn.transaction_status).to.eq('Pending');\n    }\n  });\n});",
+              "err": {},
+              "uuid": "f84632e2-1f7b-478a-901b-6b959884e3ca",
+              "parentUUID": "c613394e-aa8c-42ac-a2e1-304bb080b078",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "7870e161-f346-44ec-a2d1-edef0f3bcbb7",
+            "f4e3c0a6-0dfe-4fd2-b17d-5ba735f7a1e4",
+            "f84632e2-1f7b-478a-901b-6b959884e3ca"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 645,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

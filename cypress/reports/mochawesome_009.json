@@ -1,0 +1,219 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-07-03T07:58:21.713Z",
+    "end": "2026-07-03T07:58:22.392Z",
+    "duration": 679,
+    "testsRegistered": 7,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b50630a4-1057-4440-9b52-4988cc10ea69",
+      "title": "",
+      "fullFile": "cypress/e2e/lnv/apiRepaymentTransactionList/checkValidateFields.cy.js",
+      "file": "cypress/e2e/lnv/apiRepaymentTransactionList/checkValidateFields.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+          "title": "Check validate fields of API repaymentTransactionList",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Display response error when call api with empty body",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with empty body",
+              "timedOut": null,
+              "duration": 75,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/emptyBody.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "314baef7-2cc7-4462-81ba-bfcdcc6fa0d0",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with transaction_owner_id is null",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with transaction_owner_id is null",
+              "timedOut": null,
+              "duration": 64,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/transactionOwnerIdNull.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "4ea2fa02-d5cb-46b6-9a2d-fdf145aac38a",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with transaction_owner_id is empty string",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with transaction_owner_id is empty string",
+              "timedOut": null,
+              "duration": 61,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/transactionOwnerIdEmpty.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "92219202-b493-4392-9a61-8683d47c503f",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with channel is empty string",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with channel is empty string",
+              "timedOut": null,
+              "duration": 63,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/channelEmpty.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "be2236f1-91cd-4b00-a893-96383858b6bb",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with transaction_status is invalid",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with transaction_status is invalid",
+              "timedOut": null,
+              "duration": 137,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/invalidTransactionStatus.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([200, 400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "86cbc00e-8ef1-4bc6-aedb-9fb906956a6a",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with page is zero",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with page is zero",
+              "timedOut": null,
+              "duration": 59,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/pageIsZero.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "cc94224d-1aa1-48e2-b836-09a894540128",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Display response error when call api with page_limit is negative",
+              "fullTitle": "Check validate fields of API repaymentTransactionList Display response error when call api with page_limit is negative",
+              "timedOut": null,
+              "duration": 62,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('lnv/apiRepaymentTransactionList/reqBody/validateFields/pageLimitIsNegative.json').then(reqBody => {\n  api.setReqMethod('POST').setReqEndpoint(`${endPoint}${apiPath}`).setReqHeaders().setReqBody(reqBody).sendRequest('response');\n  cy.get('@response').then(res => {\n    cy.log('Status:', res.status);\n    cy.log('Body:', JSON.stringify(res.body));\n    expect(res.status).to.be.oneOf([400, 422]);\n  });\n});",
+              "err": {},
+              "uuid": "fc0a558f-1f5c-4ccc-9f79-bae66fb83988",
+              "parentUUID": "105efe8d-ddaf-4e3f-81df-336c78024d87",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "314baef7-2cc7-4462-81ba-bfcdcc6fa0d0",
+            "4ea2fa02-d5cb-46b6-9a2d-fdf145aac38a",
+            "92219202-b493-4392-9a61-8683d47c503f",
+            "be2236f1-91cd-4b00-a893-96383858b6bb",
+            "86cbc00e-8ef1-4bc6-aedb-9fb906956a6a",
+            "cc94224d-1aa1-48e2-b836-09a894540128",
+            "fc0a558f-1f5c-4ccc-9f79-bae66fb83988"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 521,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
