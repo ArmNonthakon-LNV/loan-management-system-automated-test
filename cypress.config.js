@@ -35,7 +35,11 @@ module.exports = defineConfig({
         ENV_CONFIG,
         ENV_SUFFIX: envSuffix,
         endPoint: endpoint,
-        testedBy: testedBy
+        testedBy: testedBy,
+        makerUsername: process.env.MAKER_USERNAME,
+        makerPassword: process.env.MAKER_PASSWORD,
+        checkerUsername: process.env.CHECKER_USERNAME,
+        checkerPassword: process.env.CHECKER_PASSWORD
       };
 
       config = { ...config, ...configure };
