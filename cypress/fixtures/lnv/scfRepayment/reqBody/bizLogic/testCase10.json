@@ -1,0 +1,229 @@
+{
+  "data": {
+    "name": "Example test case 1",
+    "CreateTermLoan": {
+      "due_day": 1,
+      "tenor_in_months": 18,
+      "interest_per_year": 18.7,
+      "total_loan_amount": 19990,
+      "total_item_price": 19990,
+      "total_processing_fee": 250,
+      "contact_date": "2026-04-05T10:30:00+07:00"
+    },
+    "CalIntAndRepay": [
+      {
+        "CalInterest": {
+          "reqBody": {
+            "calculate_start_date": "2026-04-05T14:30:00+07:00",
+            "calculate_end_date": "2026-05-14T14:30:00+07:00"
+          }
+        }
+      }
+    ],
+    "SCF": {
+      "effective_date": "2026-04-20T17:04:05+07:00",
+      "current_eff_date": "2026-05-15T17:04:05+07:00",
+      "repayment_amount": 200.0000000,
+      "expect_result": [
+        {
+          "Period": 1,
+          "day": 26,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 266.0163847,
+          "display_interst": 266.02,
+          "bf_principal": 1014.8336153,
+          "display_principal": 1014.83,
+          "cf_pricipal_balance": 18975.1663847,
+          "display_principal_balance": 18975.17
+        },
+        {
+          "Period": 2,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 301.3672316,
+          "display_interst": 301.37,
+          "bf_principal": 979.4827700,
+          "display_principal": 979.48,
+          "cf_pricipal_balance": 17995.6836163,
+          "display_principal_balance": 17995.68
+        },
+        {
+          "Period": 3,
+          "day": 30,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 276.5911920,
+          "display_interst": 276.59,
+          "bf_principal": 1004.2588080,
+          "display_principal": 1004.26,
+          "cf_pricipal_balance": 16991.4248083,
+          "display_principal_balance": 16991.42
+        },
+        {
+          "Period": 4,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 269.8610667,
+          "display_interst": 269.86,
+          "bf_principal": 1010.9889333,
+          "display_principal": 1010.99,
+          "cf_pricipal_balance": 15980.4358750,
+          "display_principal_balance": 15980.44
+        },
+        {
+          "Period": 5,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 253.8043470,
+          "display_interst": 253.80,
+          "bf_principal": 1027.0456530,
+          "display_principal": 1027.05,
+          "cf_pricipal_balance": 14953.3902220,
+          "display_principal_balance": 14953.39
+        },
+        {
+          "Period": 6,
+          "day": 30,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 229.8315600,
+          "display_interst": 229.83,
+          "bf_principal": 1051.0184400,
+          "display_principal": 1051.02,
+          "cf_pricipal_balance": 13902.3717820,
+          "display_principal_balance": 13902.37
+        },
+        {
+          "Period": 7,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 220.8001350,
+          "display_interst": 220.80,
+          "bf_principal": 1060.0498650,
+          "display_principal": 1060.05,
+          "cf_pricipal_balance": 12842.3219170,
+          "display_principal_balance": 12842.32
+        },
+        {
+          "Period": 8,
+          "day": 30,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 197.3847300,
+          "display_interst": 197.38,
+          "bf_principal": 1083.4652700,
+          "display_principal": 1083.47,
+          "cf_pricipal_balance": 11758.8566470,
+          "display_principal_balance": 11758.86
+        },
+        {
+          "Period": 9,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 186.7564155,
+          "display_interst": 186.76,
+          "bf_principal": 1094.0935845,
+          "display_principal": 1094.09,
+          "cf_pricipal_balance": 10664.7630625,
+          "display_principal_balance": 10664.76
+        },
+        {
+          "Period": 10,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 169.3798119,
+          "display_interst": 169.38,
+          "bf_principal": 1111.4701881,
+          "display_principal": 1111.47,
+          "cf_pricipal_balance": 9553.2928744,
+          "display_principal_balance": 9553.29
+        },
+        {
+          "Period": 11,
+          "day": 28,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 137.0439504,
+          "display_interst": 137.04,
+          "bf_principal": 1143.8060496,
+          "display_principal": 1143.81,
+          "cf_pricipal_balance": 8409.4868248,
+          "display_principal_balance": 8409.49
+        },
+        {
+          "Period": 12,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 133.5610820,
+          "display_interst": 133.56,
+          "bf_principal": 1147.2889180,
+          "display_principal": 1147.29,
+          "cf_pricipal_balance": 7262.1979068,
+          "display_principal_balance": 7262.20
+        },
+        {
+          "Period": 13,
+          "day": 30,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 111.6189870,
+          "display_interst": 111.62,
+          "bf_principal": 1169.2310130,
+          "display_principal": 1169.23,
+          "cf_pricipal_balance": 6092.9668938,
+          "display_principal_balance": 6092.97
+        },
+        {
+          "Period": 14,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 96.7696682,
+          "display_interst": 96.77,
+          "bf_principal": 1184.0803318,
+          "display_principal": 1184.08,
+          "cf_pricipal_balance": 4908.8865620,
+          "display_principal_balance": 4908.89
+        },
+        {
+          "Period": 15,
+          "day": 30,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 75.4489140,
+          "display_interst": 75.45,
+          "bf_principal": 1205.4010860,
+          "display_principal": 1205.40,
+          "cf_pricipal_balance": 3703.4854760,
+          "display_principal_balance": 3703.49
+        },
+        {
+          "Period": 16,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 58.8194651,
+          "display_interst": 58.82,
+          "bf_principal": 1222.0305349,
+          "display_principal": 1222.03,
+          "cf_pricipal_balance": 2481.4549411,
+          "display_principal_balance": 2481.45
+        },
+        {
+          "Period": 17,
+          "day": 31,
+          "contract_emi": 1280.8500000,
+          "bf_interest": 39.4109448,
+          "display_interst": 39.41,
+          "bf_principal": 1241.4390552,
+          "display_principal": 1241.44,
+          "cf_pricipal_balance": 1240.0158859,
+          "display_principal_balance": 1240.02
+        },
+        {
+          "Period": 18,
+          "day": 30,
+          "contract_emi": 1259.0700000,
+          "bf_interest": 19.0588740,
+          "display_interst": 19.06,
+          "bf_principal": 1240.0111260,
+          "display_principal": 1240.01,
+          "cf_pricipal_balance": 0.0047599,
+          "display_principal_balance": 0.00
+        }
+      ]
+    }
+  }
+}

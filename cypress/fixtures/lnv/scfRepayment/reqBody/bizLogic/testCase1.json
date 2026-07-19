@@ -16,7 +16,7 @@
                     "CalInterest": {
                         "reqBody": { 
                             "calculate_start_date": "2026-04-01T14:30:00+07:00",
-                            "calculate_end_date": "2026-04-29T14:30:00+07:00"
+                            "calculate_end_date": "2026-04-30T14:30:00+07:00"
                         },
                         "expect_result":{
                             "Period": 1,
@@ -24,24 +24,7 @@
                             "day": 30
                         }
                     }
-                },
-                {
-                    "Repayment": {
-                        "reqBody": {
-                            "repayment_date": "2026-04-30T14:30:00+07:00",
-                            "repayment_amount": 1065.3100000
-                        }
-                    }
-                },
-                {
-                    "CalInterest": {
-                        "reqBody": { 
-                            "calculate_start_date": "2026-04-01T14:30:00+07:00",
-                            "calculate_end_date": "2026-04-30T14:30:00+07:00"
-                        }
-                    }
                 }
-                
             ],
             "SCF": {
                 "effective_date": "2026-04-30T17:04:05+07:00",
@@ -50,7 +33,7 @@
                  "expect_result":[
                     {
                         "Period": 1,
-                        "day": 29,
+                        "day": 30,
                         "contract_emi": 1065.3100000,
                         "bf_interest": 246.5162081,
                         "display_interst": 246.52,

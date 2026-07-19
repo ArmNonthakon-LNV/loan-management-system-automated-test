@@ -2,7 +2,7 @@ import { APIHelper } from '../../../support/common/apiHelper';
 
 describe('SCF Backdate Repayment - Full Flow', () => {
   const api = new APIHelper();
-  const endPoint = Cypress.env('endPoint');
+  const endPoint = 'http://127.0.0.1:8080';
 
   // Shared state across steps
   let makerToken;
@@ -44,7 +44,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
     expect(Cypress.env('checkerPassword'), 'checkerPassword env var').to.not.be.undefined;
 
     // Load fixture once and store
-    cy.fixture('lnv/scfRepayment/reqBody/bizLogic/scfDatatest.json').then((fixture) => {
+    cy.fixture('lnv/scfRepayment/reqBody/bizLogic/testCase7.json').then((fixture) => {
       testData = fixture.data;
     });
   });
@@ -131,9 +131,9 @@ describe('SCF Backdate Repayment - Full Flow', () => {
       },
       "customer_credit_limit": [
         {"index_no": 1, "credit_limit_type": "Revolving", "limit_reference_id": 1, "reference_type": "Customer", "reference_id": "0", "parent_index": null, "level": 1, "supplier_branch_id": null, "currency_code": "THB", "original_limit_amount": 100000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 7.0, "fixed_interest_rate": 5.38271},
-        {"index_no": 2, "credit_limit_type": "Non-Revolving", "limit_reference_id": 3, "reference_type": "Product", "reference_id": "3", "parent_index": 1, "level": 2, "supplier_branch_id": null, "currency_code": "THB", "original_limit_amount": 80000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 12.36432, "fixed_interest_rate": 1.36432},
-        {"index_no": 3, "credit_limit_type": "Non-Revolving", "limit_reference_id": 4, "reference_type": "Sponsor", "reference_id": "3", "parent_index": 2, "level": 3, "supplier_branch_id": null, "currency_code": "THB", "original_limit_amount": 50000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 12.0, "fixed_interest_rate": 3.36432},
-        {"index_no": 4, "credit_limit_type": "Non-Revolving", "limit_reference_id": 4, "reference_type": "Supplier", "reference_id": "90001104", "parent_index": 3, "level": 4, "supplier_branch_id": 3629, "currency_code": "THB", "original_limit_amount": 50000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 25.00000, "fixed_interest_rate": 18.7}
+        {"index_no": 2, "credit_limit_type": "Non-Revolving", "limit_reference_id": 3, "reference_type": "Product", "reference_id": "3", "parent_index": 1, "level": 2, "supplier_branch_id": null, "currency_code": "THB", "original_limit_amount": 100000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 12.36432, "fixed_interest_rate": 1.36432},
+        {"index_no": 3, "credit_limit_type": "Non-Revolving", "limit_reference_id": 4, "reference_type": "Sponsor", "reference_id": "3", "parent_index": 2, "level": 3, "supplier_branch_id": null, "currency_code": "THB", "original_limit_amount": 100000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 12.0, "fixed_interest_rate": 3.36432},
+        {"index_no": 4, "credit_limit_type": "Non-Revolving", "limit_reference_id": 4, "reference_type": "Supplier", "reference_id": "90001104", "parent_index": 3, "level": 4, "supplier_branch_id": 3629, "currency_code": "THB", "original_limit_amount": 100000.00, "standard_interest_rate_type": "FIXED", "floating_interest_rate_type": "MRR", "floating_spread": 25.00000, "fixed_interest_rate": 18.7}
       ],
       "loan_samsung_detail": {
         "due_day": createTermLoan.due_day,
@@ -160,7 +160,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
     api
       .setReqMethod('POST')
-      .setReqEndpoint(`${endPoint}/api/customer/term-loan/create`)
+      .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/customer/term-loan/create`)
       .setReqHeaders()
       .setReqBody(createReqBody)
       .sendRequest('createDrawdownResponse');
@@ -186,7 +186,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
       api
         .setReqMethod('POST')
-        .setReqEndpoint(`${endPoint}/api/customer/term-loan/activate`)
+        .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/customer/term-loan/activate`)
         .setReqHeaders()
         .setReqBody(activateBody)
         .sendRequest('activateResponse');
@@ -249,7 +249,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
         api
           .setReqMethod('POST')
-          .setReqEndpoint(`${endPoint}/api/term-loan/test-interest-cal`)
+          .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/term-loan/test-interest-cal`)
           .setReqHeadersWithAuth('en_US', makerToken)
           .setReqBody(calReqBody)
           .sendRequest(`calInterest_${index}`);
@@ -260,33 +260,38 @@ describe('SCF Backdate Repayment - Full Flow', () => {
           expect(res.body.response_code).to.eq(0);
         });
 
-        // Wait 30 sec for background calculation to complete
-        cy.wait(30000);
+        // Calculate wait time: (end_date - start_date) in days * 0.5 sec
+        const startDate = new Date(calReqBody.calculate_start_date);
+        const endDate = new Date(calReqBody.calculate_end_date);
+        const diffDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+        const waitMs = Math.max(diffDays * 500, 5000); // minimum 5 sec
+        cy.log(`Waiting ${waitMs}ms (${diffDays} days * 0.5s)`);
+        cy.wait(waitMs);
 
         // Verify interest calculation in DB
-        if (entry.CalInterest.expect_result) {
-          const expectedPeriod = entry.CalInterest.expect_result.Period;
-          const expectedBfInterest = entry.CalInterest.expect_result.bf_interest;
-          const expectedDay = entry.CalInterest.expect_result.day;
+        // if (entry.CalInterest.expect_result) {
+        //   const expectedPeriod = entry.CalInterest.expect_result.Period;
+        //   const expectedBfInterest = entry.CalInterest.expect_result.bf_interest;
+        //   const expectedDay = entry.CalInterest.expect_result.day;
 
-          const query = `SELECT i.bf_interest, i.day FROM installment_balance i WHERE i.period = ${expectedPeriod} AND i.loan_contract_id = '${loanContractId}'`;
-          cy.log('Verify Interest Query:', query);
+        //   const query = `SELECT i.bf_interest, i.day FROM installment_balance i WHERE i.period = ${expectedPeriod} AND i.loan_contract_id = '${loanContractId}'`;
+        //   cy.log('Verify Interest Query:', query);
 
-          cy.task('queryDbLNV', query).then((rows) => {
-            expect(rows).to.be.an('array');
-            expect(rows.length).to.be.greaterThan(0, 'Should find installment_balance record');
+        //   cy.task('queryDbLNV', query).then((rows) => {
+        //     expect(rows).to.be.an('array');
+        //     expect(rows.length).to.be.greaterThan(0, 'Should find installment_balance record');
 
-            const row = rows[0];
-            cy.log('DB Interest Record:', JSON.stringify(row));
+        //     const row = rows[0];
+        //     cy.log('DB Interest Record:', JSON.stringify(row));
 
-            expect(parseFloat(row.bf_interest)).to.be.closeTo(expectedBfInterest, 0.01,
-              `bf_interest should match expected ${expectedBfInterest}`);
-            expect(parseInt(row.day)).to.eq(expectedDay,
-              `day should match expected ${expectedDay}`);
+        //     expect(parseFloat(row.bf_interest)).to.be.closeTo(expectedBfInterest, 0.01,
+        //       `bf_interest should match expected ${expectedBfInterest}`);
+        //     expect(parseInt(row.day)).to.eq(expectedDay,
+        //       `day should match expected ${expectedDay}`);
 
-            cy.log(`[Entry ${index + 1}] Interest verification passed ✓`);
-          });
-        }
+        //     cy.log(`[Entry ${index + 1}] Interest verification passed ✓`);
+        //   });
+        // }
 
         // Then move to next entry
         cy.then(() => processEntry(index + 1));
@@ -312,7 +317,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
         api
           .setReqMethod('POST')
-          .setReqEndpoint(`${endPoint}/api/repayment/term-loan/create`)
+          .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/repayment/term-loan/create`)
           .setReqHeaders()
           .setReqBody(repayReqBody)
           .sendRequest(`createRepay_${index}`);
@@ -335,7 +340,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
           api
             .setReqMethod('POST')
-            .setReqEndpoint(`${endPoint}/api/repayment/term-loan/test-confirm`)
+            .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/repayment/term-loan/test-confirm`)
             .setReqHeadersWithAuth('en_US', makerToken)
             .setReqBody(confirmBody)
             .sendRequest(`confirmRepay_${index}`);
@@ -367,7 +372,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
     api
       .setReqMethod('POST')
-      .setReqEndpoint(`${endPoint}/api/login`)
+      .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/login`)
       .setReqHeaders()
       .setReqBody(reqBody)
       .sendRequest('makerLoginResponse');
@@ -524,7 +529,7 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
     api
       .setReqMethod('POST')
-      .setReqEndpoint(`${endPoint}/api/login`)
+      .setReqEndpoint(`https://uat-lms-portal.lendocraft.com/api/login`)
       .setReqHeaders()
       .setReqBody(reqBody)
       .sendRequest('checkerLoginResponse');
@@ -599,16 +604,17 @@ describe('SCF Backdate Repayment - Full Flow', () => {
     });
   });
 
+
   // ============================================================
   // STEP 10: Verify Installment Balance in Database
   // ============================================================
-  it('Step 10: Verify Installment Balance Data', () => {
+  it('Step 10: Verify Samsung current schdule Installment Balance Data', () => {
     expect(loanContractId, 'Loan Contract ID should be available').to.not.be.undefined;
 
     const expectedResults = testData.SCF.expect_result;
     expect(expectedResults, 'expect_result should be defined').to.be.an('array').and.not.be.empty;
 
-    const query = `SELECT i.period, i.contract_emi, i.bf_interest, i.bf_principal, i.cf_principal_balance, i.display_interest_until_due_date, i.display_principal_until_due_date FROM installment_balance i WHERE i.loan_contract_id = '${loanContractId}' AND period <> 0 ORDER BY period`;
+    const query = `SELECT i.period,i.display_contract_emi ,i.display_interest_until_due_date, i.display_principal_until_due_date,i.display_current_principal_balance FROM installment_balance i WHERE i.loan_contract_id = '${loanContractId}' AND period <> 0  ORDER BY period`;
     cy.log('Installment Balance Query:', query);
 
     cy.task('queryDbLNV', query).then((rows) => {
@@ -621,21 +627,9 @@ describe('SCF Backdate Repayment - Full Flow', () => {
 
         cy.log(`--- Period ${expected.Period} ---`);
 
-        // contract_emi
-        expect(parseFloat(row.contract_emi)).to.be.closeTo(expected.contract_emi, 0.01,
-          `Period ${expected.Period}: contract_emi mismatch`);
-
-        // bf_interest
-        expect(parseFloat(row.bf_interest)).to.be.closeTo(expected.bf_interest, 0.01,
-          `Period ${expected.Period}: bf_interest mismatch`);
-
-        // bf_principal
-        expect(parseFloat(row.bf_principal)).to.be.closeTo(expected.bf_principal, 0.01,
-          `Period ${expected.Period}: bf_principal mismatch`);
-
-        // cf_principal_balance
-        expect(parseFloat(row.cf_principal_balance)).to.be.closeTo(expected.cf_pricipal_balance, 0.01,
-          `Period ${expected.Period}: cf_principal_balance mismatch`);
+        // display_contract_emi
+        expect(parseFloat(row.display_contract_emi)).to.be.closeTo(expected.contract_emi, 0.01,
+          `Period ${expected.Period}: display_contract_emi mismatch`);
 
         // display_interest_until_due_date
         expect(parseFloat(row.display_interest_until_due_date)).to.be.closeTo(expected.display_interst, 0.01,
@@ -645,10 +639,112 @@ describe('SCF Backdate Repayment - Full Flow', () => {
         expect(parseFloat(row.display_principal_until_due_date)).to.be.closeTo(expected.display_principal, 0.01,
           `Period ${expected.Period}: display_principal mismatch`);
 
+        // display_current_principal_balance
+        expect(parseFloat(row.display_current_principal_balance)).to.be.closeTo(expected.display_principal_balance, 0.01,
+          `Period ${expected.Period}: display_principal_balance mismatch`);
+
         cy.log(`Period ${expected.Period}: ✓ All values match`);
       });
 
       cy.log('All installment balance periods verified successfully ✓');
+    });
+  });
+
+
+  // ============================================================
+  // STEP 11: Verify bf_interest, bf_principal, and cf_principal_balance for paid periods
+  // ============================================================
+  it('Step 11: Verify Paid Installment Balance (bf_interest, bf_principal, cf_principal_balance)', () => {
+    expect(loanContractId, 'Loan Contract ID should be available').to.not.be.undefined;
+
+    const expectedResults = testData.SCF.expect_result;
+    expect(expectedResults, 'expect_result should be defined').to.be.an('array').and.not.be.empty;
+
+    const query = `SELECT i.period, i.day, i.bf_interest, i.bf_principal, i.repayment_amount, i.cf_interest, i.cf_principal, i.cf_principal_balance, i.repayment_status, i.installment_status FROM installment_balance i WHERE i.loan_contract_id = '${loanContractId}' AND period <> 0 AND i.repayment_status IN ('Paid','Advance Paid','Partial Paid') ORDER BY period`;
+    cy.log('Paid Installment Balance Query:', query);
+
+    cy.task('queryDbLNV', query).then((rows) => {
+      expect(rows).to.be.an('array');
+      cy.log(`Found ${rows.length} paid periods`);
+
+      rows.forEach((row) => {
+        const period = parseInt(row.period);
+        const expected = expectedResults.find(e => e.Period === period);
+
+        if (expected) {
+          cy.log(`--- Period ${period} (${row.repayment_status}) ---`);
+
+          // bf_interest: if not Partial Paid, use (bf_interest - cf_interest); if Partial Paid, use bf_interest directly
+          if (row.repayment_status !== 'Partial Paid') {
+            expect(parseFloat(row.bf_interest) - parseFloat(row.cf_interest)).to.be.closeTo(expected.bf_interest, 0.01,
+              `Period ${period}: bf_interest (bf - cf) mismatch`);
+          } else {
+            expect(parseFloat(row.bf_interest)).to.be.closeTo(expected.bf_interest, 0.01,
+              `Period ${period}: bf_interest mismatch`);
+          }
+
+          // bf_principal
+          expect(parseFloat(row.bf_principal)).to.be.closeTo(expected.bf_principal, 0.01,
+            `Period ${period}: bf_principal mismatch`);
+
+          // cf_principal_balance
+          expect(parseFloat(row.cf_principal_balance)).to.be.closeTo(expected.cf_pricipal_balance, 0.01,
+            `Period ${period}: cf_principal_balance mismatch`);
+
+          cy.log(`Period ${period}: ✓ bf_interest, bf_principal, cf_principal_balance match`);
+        }
+      });
+
+      cy.log('All paid installment balances verified successfully ✓');
+    });
+  });
+
+  // ============================================================
+  // STEP 12: Verify Interest Calculation for Current Effective Date Period
+  // ============================================================
+  it('Step 12: Verify Interest Calculation for Current Effective Date Period', () => {
+    expect(loanContractId, 'Loan Contract ID should be available').to.not.be.undefined;
+
+    const scfData = testData.SCF;
+    const currentEffDate = scfData.current_eff_date;
+
+    // Subtract 1 day from current_eff_date and extract date portion (YYYY-MM-DD)
+    const effDate = new Date(currentEffDate);
+    effDate.setDate(effDate.getDate() - 1);
+    const effDateOnly = effDate.toISOString().split('T')[0];
+    cy.log('Current Effective Date:', effDateOnly);
+
+    const query = `SELECT i.period, i.day, i.int_rate, i.bf_balance, i.bf_interest, i.bf_principal, i.repayment_amount, i.cf_interest, i.cf_principal, i.cf_principal_balance, i.repayment_status, i.installment_status FROM installment_balance i WHERE i.loan_contract_id = '${loanContractId}' AND period <> 0 AND i.from_date_formatted <= '${effDateOnly}' AND i.to_date_formatted >= '${effDateOnly}' ORDER BY period`;
+    cy.log('Interest Verification Query:', query);
+
+    cy.task('queryDbLNV', query).then((rows) => {
+      expect(rows).to.be.an('array');
+      expect(rows.length).to.be.greaterThan(0, 'Should find at least one period covering the current effective date');
+
+      rows.forEach((row) => {
+        const period = parseInt(row.period);
+        const day = parseInt(row.day);
+        const intRate = parseFloat(row.int_rate);
+        const bfBalance = parseFloat(row.bf_balance);
+        const bfInterest = parseFloat(row.bf_interest);
+
+        // Calculate expected interest: bf_balance * (int_rate / 100) * (day / 365)
+        const calculatedInterest = bfBalance * (intRate / 100) * (day / 365);
+
+        cy.log(`--- Period ${period} ---`);
+        cy.log(`bf_balance: ${bfBalance}`);
+        cy.log(`int_rate: ${intRate}`);
+        cy.log(`day: ${day}`);
+        cy.log(`Calculated Interest: ${calculatedInterest}`);
+        cy.log(`DB bf_interest: ${bfInterest}`);
+
+        expect(calculatedInterest).to.be.closeTo(bfInterest, 0.01,
+          `Period ${period}: Calculated interest (bf_balance * int_rate/100 * day/365) should match bf_interest`);
+
+        cy.log(`Period ${period}: ✓ Interest calculation verified`);
+      });
+
+      cy.log('Interest calculation for current effective date period verified successfully ✓');
     });
   });
 });

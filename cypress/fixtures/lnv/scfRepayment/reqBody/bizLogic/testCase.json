@@ -1,0 +1,39 @@
+{
+    "data": 
+        {
+            "name": "Example test case 1",
+            "CreateTermLoan":{
+                "due_day": 1,
+                "tenor_in_months": 12,
+                "interest_per_year": 18.7,
+                "total_loan_amount": 3999,
+                "total_item_price": 3999,
+                "total_processing_fee": 250,
+                "contact_date": "2026-04-05T10:30:00+07:00"
+            },
+            "CalIntAndRepay":[
+                 {
+                    "CalInterest": {
+                        "reqBody": { 
+                            "calculate_start_date": "2026-04-05T14:30:00+07:00",
+                            "calculate_end_date": "2026-04-29T14:30:00+07:00"
+                        }
+                    }
+                },
+                {
+                    "Repayment": {
+                        "reqBody":{
+                            "repayment_amount": 367.5900000,
+                            "repayment_date": "2026-04-30T14:30:00+07:00"
+                        }
+                    }
+                }
+            ],
+            "SCF": {
+                
+            }
+                
+            
+        }
+}
+
